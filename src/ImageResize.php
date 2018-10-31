@@ -35,7 +35,10 @@ class ImageResize
      */
     public static function process($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        $imagine = new Imagine();
+        $info          = new \SplFileInfo($url);
+        $fileExtension = $info->getExtension();
+        $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+        $imagine       = new Imagine();
         if (is_file($url)) {
             $image = $imagine->open($url);
         } else {
@@ -44,7 +47,7 @@ class ImageResize
         }
         $image->resize(new Box($width, $height), ImageInterface::FILTER_UNDEFINED);
 
-        return $image->show($format);
+        return $image->show($outputFormat);
     }
 
     /**
