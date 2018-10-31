@@ -21,7 +21,9 @@
     "require": {
         "php": ">=5.4",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "sybio/image-workshop": "^2.1",
+        "imagine/imagine": "^1.1"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"
