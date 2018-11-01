@@ -39,6 +39,16 @@ interface ImageCacheInterface
     public function setUrlPath($urlPath = '');
 
     /**
+     * Cấu hình đường dẫn link ảnh mặc định
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/1/18 15:40
+     *
+     * @param string $defaultImage Đường dẫn link ảnh mặc định
+     */
+    public function setDefaultImage($defaultImage = '');
+
+    /**
      * Hàm hỗ trợ tạo thumbnail cho ảnh
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
