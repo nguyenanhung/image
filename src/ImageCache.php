@@ -27,6 +27,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     protected $tmpPath;
     /** @var string Đường dẫn hình ảnh trên server - tương đương với tmpPath */
     protected $urlPath;
+    /** @var string Cấu hình tới link ảnh mặc định, sẽ sử dụng trong trường hợp ảnh bị lỗi */
+    protected $defaultImage;
 
     /**
      * ImageCache constructor.
@@ -78,6 +80,19 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     }
 
     /**
+     * Cấu hình đường dẫn link ảnh mặc định
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/1/18 15:40
+     *
+     * @param string $defaultImage Đường dẫn link ảnh mặc định
+     */
+    public function setDefaultImage($defaultImage = '')
+    {
+        $this->defaultImage = $defaultImage;
+    }
+
+    /**
      * Hàm hỗ trợ tạo thumbnail cho ảnh
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
@@ -92,29 +107,34 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        // Xác định extention của file ảnh
-        $info          = new \SplFileInfo($url);
-        $fileExtension = $info->getExtension();
-        $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-        // Quy định tên file ảnh sẽ lưu
-        $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
-        $imageFile = $this->tmpPath . $fileName;
-        $imageUrl  = $this->urlPath . $fileName;
-        if (!file_exists($imageFile)) {
-            // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
-            // Xác định size ảnh
-            $size    = new Box($width, $height);
-            $imagine = new Imagine();
-            if (is_file($url)) {
-                $image = $imagine->open($url);
-            } else {
-                $url   = Utils::getImageFromUrl($url);
-                $image = $imagine->load($url);
+        try {
+            // Xác định extention của file ảnh
+            $info          = new \SplFileInfo($url);
+            $fileExtension = $info->getExtension();
+            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+            // Quy định tên file ảnh sẽ lưu
+            $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
+            $imageFile = $this->tmpPath . $fileName;
+            $imageUrl  = $this->urlPath . $fileName;
+            if (!file_exists($imageFile)) {
+                // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
+                // Xác định size ảnh
+                $size    = new Box($width, $height);
+                $imagine = new Imagine();
+                if (is_file($url)) {
+                    $image = $imagine->open($url);
+                } else {
+                    $url   = Utils::getImageFromUrl($url);
+                    $image = $imagine->load($url);
+                }
+                $image->resize($size)->save($imageFile);
             }
-            $image->resize($size)->save($imageFile);
-        }
 
-        return trim($imageUrl);
+            return trim($imageUrl);
+        }
+        catch (\Exception $e) {
+            return $this->defaultImage;
+        }
     }
 
     /**
@@ -130,26 +150,31 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function cache($url = '', $format = 'png')
     {
-        // Xác định extention của file ảnh
-        $info          = new \SplFileInfo($url);
-        $fileExtension = $info->getExtension();
-        $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-        // Quy định tên file ảnh sẽ lưu
-        $fileName  = md5($url) . $outputFormat;
-        $imageFile = $this->tmpPath . $fileName;
-        $imageUrl  = $this->urlPath . $fileName;
-        if (!file_exists($imageFile)) {
-            // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
-            $imagine = new Imagine();
-            if (is_file($url)) {
-                $image = $imagine->open($url);
-            } else {
-                $url   = Utils::getImageFromUrl($url);
-                $image = $imagine->load($url);
+        try {
+            // Xác định extention của file ảnh
+            $info          = new \SplFileInfo($url);
+            $fileExtension = $info->getExtension();
+            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+            // Quy định tên file ảnh sẽ lưu
+            $fileName  = md5($url) . $outputFormat;
+            $imageFile = $this->tmpPath . $fileName;
+            $imageUrl  = $this->urlPath . $fileName;
+            if (!file_exists($imageFile)) {
+                // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
+                $imagine = new Imagine();
+                if (is_file($url)) {
+                    $image = $imagine->open($url);
+                } else {
+                    $url   = Utils::getImageFromUrl($url);
+                    $image = $imagine->load($url);
+                }
+                $image->save($imageFile);
             }
-            $image->save($imageFile);
-        }
 
-        return trim($imageUrl);
+            return trim($imageUrl);
+        }
+        catch (\Exception $e) {
+            return $this->defaultImage;
+        }
     }
 }
