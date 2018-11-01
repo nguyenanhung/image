@@ -58,3 +58,16 @@ function testBackupPath()
 {
     return __DIR__ . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'backup' . DIRECTORY_SEPARATOR;
 }
+
+/**
+ * Function imgSrc
+ *
+ * @author: 713uk13m <dev@nguyenanhung.com>
+ * @time  : 11/1/18 14:39
+ *
+ * @param string $url
+ */
+function imgSrc($url = '')
+{
+    echo '<img src="' . $url . '" />';
+}
