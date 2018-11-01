@@ -111,7 +111,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 $url   = Utils::getImageFromUrl($url);
                 $image = $imagine->load($url);
             }
-            $image->thumbnail($size)->save($imageFile);
+            $image->resize($size)->save($imageFile);
         }
 
         return trim($imageUrl);
