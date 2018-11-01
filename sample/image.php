@@ -14,6 +14,6 @@ $cache = new \nguyenanhung\MyImage\ImageCache();
 $cache->setTmpPath(__DIR__ . '/../storage/tmp/');
 $cache->setUrlPath('http://anhung.io/Packages/image/storage/tmp/');
 
-$thumbnail = $cache->thumbnail($url);
+$thumbnail = $cache->thumbnail($url, 200, 300);
 
 imgSrc($thumbnail);
