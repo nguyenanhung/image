@@ -13,6 +13,7 @@ use nguyenanhung\MyImage\Interfaces\ImageCacheInterface;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use nguyenanhung\MyImage\Repository\DataRepository;
 
 /**
  * Class ImageCache
@@ -89,6 +90,10 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function setDefaultImage($defaultImage = '')
     {
+        if (empty($defaultImage)) {
+            $image        = DataRepository::getData('config_image');
+            $defaultImage = $image['default_image'];
+        }
         $this->defaultImage = $defaultImage;
     }
 
