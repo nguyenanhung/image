@@ -116,6 +116,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
+        $image        = DataRepository::getData('config_image');
+        $defaultImage = $image['default_image'];
         try {
             Utils::debug('URL: ' . $url);
             Utils::debug('Width: ' . $width);
@@ -162,7 +164,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
         catch (\Exception $e) {
             Utils::debug('Exception: ' . $e->getMessage());
 
-            return NULL;
+            return $defaultImage;
         }
     }
 }
