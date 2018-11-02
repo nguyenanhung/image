@@ -112,8 +112,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        $image        = DataRepository::getData('config_image');
-        $defaultImage = $image['default_image'];
+//        $image        = DataRepository::getData('config_image');
+//        $defaultImage = $image['default_image'];
         try {
             // Xác định extention của file ảnh
             $info          = new \SplFileInfo($url);
@@ -147,49 +147,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
         }
         catch (\Exception $e) {
             return NULL;
-        }
-    }
-
-    /**
-     * Hàm hỗ trợ cache ảnh về hệ thống
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 14:49
-     *
-     * @param string $url    Đường dẫn hoặc URL hình ảnh
-     * @param string $format Format đầu ra
-     *
-     * @return string Đường dẫn tới hình ảnh được cache
-     */
-    public function cache($url = '', $format = 'png')
-    {
-//        $image        = DataRepository::getData('config_image');
-//        $defaultImage = $image['default_image'];
-        try {
-            // Xác định extention của file ảnh
-            $info          = new \SplFileInfo($url);
-            $fileExtension = $info->getExtension();
-            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-            // Quy định tên file ảnh sẽ lưu
-            $fileName  = md5($url) . $outputFormat;
-            $imageFile = $this->tmpPath . $fileName;
-            $imageUrl  = $this->urlPath . $fileName;
-            if (!file_exists($imageFile)) {
-                // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
-                $imagine = new Imagine();
-                if (is_file($url)) {
-                    $image = $imagine->open($url);
-                } else {
-                    $url   = Utils::getImageFromUrl($url);
-                    $image = $imagine->load($url);
-                }
-                $image->save($imageFile);
-            }
-
-            return trim($imageUrl);
-        }
-        catch (\Exception $e) {
-            return $this->defaultImage;
         }
     }
 }
