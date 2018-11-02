@@ -31,6 +31,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     /** @var string Cấu hình tới link ảnh mặc định, sẽ sử dụng trong trường hợp ảnh bị lỗi */
     protected $defaultImage;
 
+    protected $logger;
+
     /**
      * ImageCache constructor.
      */
@@ -109,16 +111,20 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @param string $format Format đầu ra
      *
      * @return string Đường dẫn link tới hình ảnh được tạo thumbnail
+     * @throws \Exception
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
-//        $image        = DataRepository::getData('config_image');
-//        $defaultImage = $image['default_image'];
+        Utils::debug('URL: ' . $url);
+        Utils::debug('Width: ' . $width);
+        Utils::debug('Height: ' . $height);
+        Utils::debug('Format: ' . $format);
         try {
             // Xác định extention của file ảnh
             $info          = new \SplFileInfo($url);
             $fileExtension = $info->getExtension();
             $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+            Utils::debug('Output Format: ' . $outputFormat);
             // Quy định tên file ảnh sẽ lưu
             $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
             $imageFile = $this->tmpPath . $fileName;
