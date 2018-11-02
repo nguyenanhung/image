@@ -139,6 +139,9 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                     $image->resize($size)->save($imageFile);
                 } else {
                     $getContent = Utils::getImageFromUrl($url);
+                    if ($getContent === NULL) {
+                        return $this->defaultImage;
+                    }
                     if (isset($getContent['content'])) {
                         $image = $imagine->load($getContent['content']);
                     } else {

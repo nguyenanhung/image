@@ -38,15 +38,20 @@ class Utils implements ProjectInterface
      * Function getImageFromUrl
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 15:27
+     * @time  : 11/2/18 16:48
      *
      * @param string $url
      *
-     * @return array|bool|string
+     * @return array|bool|null|string
      * @throws \Exception
      */
     public static function getImageFromUrl($url = '')
     {
+        $header       = get_headers($url);
+        $content_type = $header["Content-Type"];
+        if (isset($content_type) && strpos('text', $content_type)) {
+            return NULL;
+        }
         try {
             $curl = new Curl();
             $curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
@@ -68,7 +73,7 @@ class Utils implements ProjectInterface
                 ];
             } else {
                 return [
-                    'status'          => 'error',
+                    'status'          => 'success',
                     'code'            => $curl->http_status_code,
                     'error'           => $curl->error_message,
                     'response_header' => $curl->response_headers,
