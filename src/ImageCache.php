@@ -147,6 +147,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                         $resultImage = trim($imageUrl);
                     }
                 }
+            } else {
+                $resultImage = trim($imageUrl);
             }
         }
         catch (\Exception $e) {
