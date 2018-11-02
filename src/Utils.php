@@ -10,23 +10,40 @@
 namespace nguyenanhung\MyImage;
 
 use Curl\Curl;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 
 /**
  * Class Utils
  *
  * @package nguyenanhung\MyImage
  */
-class Utils
+class Utils implements ProjectInterface
 {
+    /**
+     * Function getVersion
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/2/18 15:26
+     *
+     * @return mixed|string
+     */
+    public function getVersion()
+    {
+        return self::VERSION;
+    }
+
     /**
      * Function getImageFromUrl
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 09:43
+     * @time  : 11/2/18 15:27
      *
      * @param string $url
      *
      * @return array|bool|string
+     * @throws \Exception
      */
     public static function getImageFromUrl($url = '')
     {
@@ -40,6 +57,8 @@ class Utils
             $curl->setOpt(CURLOPT_FOLLOWLOCATION, TRUE);
             $curl->get($url);
             if ($curl->error === TRUE) {
+                self::debug('Error Exception: ' . $curl->http_status_code);
+
                 return [
                     'status'          => 'error',
                     'code'            => $curl->http_status_code,
@@ -58,7 +77,28 @@ class Utils
             }
         }
         catch (\Exception $e) {
+            self::debug('Error Exception: ' . $e->getMessage());
+
             return file_get_contents($url);
+        }
+    }
+
+    /**
+     * Function debug
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/2/18 15:26
+     *
+     * @param string $msg
+     *
+     * @throws \Exception
+     */
+    public static function debug($msg = 'test')
+    {
+        if (self::USE_DEBUG === TRUE) {
+            $logger = new Logger('imageCache');
+            $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
+            $logger->debug($msg);
         }
     }
 }
