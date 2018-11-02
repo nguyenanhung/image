@@ -14,6 +14,8 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 
+ini_set('display_errors', 0);
+
 /**
  * Class Utils
  *
@@ -38,11 +40,11 @@ class Utils implements ProjectInterface
      * Function getImageFromUrl
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 15:27
+     * @time  : 11/2/18 16:48
      *
      * @param string $url
      *
-     * @return array|bool|string
+     * @return array|bool|null|string
      * @throws \Exception
      */
     public static function getImageFromUrl($url = '')
@@ -68,7 +70,7 @@ class Utils implements ProjectInterface
                 ];
             } else {
                 return [
-                    'status'          => 'error',
+                    'status'          => 'success',
                     'code'            => $curl->http_status_code,
                     'error'           => $curl->error_message,
                     'response_header' => $curl->response_headers,

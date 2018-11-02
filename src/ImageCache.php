@@ -9,11 +9,14 @@
 
 namespace nguyenanhung\MyImage;
 
+use Imagine\Exception\RuntimeException;
 use nguyenanhung\MyImage\Interfaces\ImageCacheInterface;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use nguyenanhung\MyImage\Repository\DataRepository;
+
+ini_set('display_errors', 0);
 
 /**
  * Class ImageCache
@@ -115,44 +118,62 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        Utils::debug('URL: ' . $url);
-        Utils::debug('Width: ' . $width);
-        Utils::debug('Height: ' . $height);
-        Utils::debug('Format: ' . $format);
+        $image        = DataRepository::getData('config_image');
+        $defaultImage = $image['default_image'];
         try {
-            // Xác định extention của file ảnh
-            $info          = new \SplFileInfo($url);
-            $fileExtension = $info->getExtension();
-            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-            Utils::debug('Output Format: ' . $outputFormat);
-            // Quy định tên file ảnh sẽ lưu
-            $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
-            $imageFile = $this->tmpPath . $fileName;
-            $imageUrl  = $this->urlPath . $fileName;
-            if (!file_exists($imageFile)) {
-                // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
-                // Xác định size ảnh
-                $size    = new Box($width, $height);
-                $imagine = new Imagine();
-                if (is_file($url)) {
-                    $image = $imagine->open($url);
-                    $image->resize($size)->save($imageFile);
-                } else {
-                    $getContent = Utils::getImageFromUrl($url);
-                    if (isset($getContent['content'])) {
-                        $image = $imagine->load($getContent['content']);
+            Utils::debug('URL: ' . $url);
+            Utils::debug('Width: ' . $width);
+            Utils::debug('Height: ' . $height);
+            Utils::debug('Format: ' . $format);
+            try {
+                // Xác định extention của file ảnh
+                $info          = new \SplFileInfo($url);
+                $fileExtension = $info->getExtension();
+                $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+                Utils::debug('Output Format: ' . $outputFormat);
+                // Quy định tên file ảnh sẽ lưu
+                $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
+                $imageFile = $this->tmpPath . $fileName;
+                $imageUrl  = $this->urlPath . $fileName;
+                if (!file_exists($imageFile)) {
+                    Utils::debug('Khong ton tai file: ' . $imageFile);
+                    // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
+                    // Xác định size ảnh
+                    $size    = new Box($width, $height);
+                    $imagine = new Imagine();
+                    if (is_file($url)) {
+                        Utils::debug('URL is File');
+                        $image = $imagine->open($url);
+                        $image->resize($size)->save($imageFile);
                     } else {
-                        $image = $imagine->load($getContent);
+                        Utils::debug('URL is URL');
+                        $getContent = Utils::getImageFromUrl($url);
+                        Utils::debug('Data Content: ' . json_encode($getContent));
+                        if (isset($getContent['content'])) {
+                            $image = $imagine->load($getContent['content']);
+                            Utils::debug('Load Content with CURL');
+                        } else {
+                            $image = $imagine->load($getContent);
+                            Utils::debug('Load Content with file_get_content');
+                        }
+                        $result = $image->resize($size)->save($imageFile);
+                        Utils::debug('Ahihi: ' . json_encode($result));
                     }
-                    $image->resize($size)->save($imageFile);
                 }
-            }
-            $resultImage = trim($imageUrl);
+                $resultImage = trim($imageUrl);
 
-            return $resultImage;
+                return $resultImage;
+            }
+            catch (RuntimeException $runtimeException) {
+                Utils::debug('RuntimeException: ' . $runtimeException->getMessage());
+
+                return NULL;
+            }
         }
         catch (\Exception $e) {
-            return NULL;
+            Utils::debug('Exception: ' . $e->getMessage());
+
+            return $defaultImage;
         }
     }
 }
