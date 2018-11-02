@@ -112,6 +112,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
+        $image        = DataRepository::getData('config_image');
+        $defaultImage = $image['default_image'];
         try {
             // Xác định extention của file ảnh
             $info          = new \SplFileInfo($url);
@@ -129,8 +131,17 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 if (is_file($url)) {
                     $image = $imagine->open($url);
                 } else {
-                    $url   = Utils::getImageFromUrl($url);
-                    $image = $imagine->load($url);
+                    $getContent = Utils::getImageFromUrl($url);
+                    if (is_array($getContent) && $getContent['status'] == 'error') {
+                        // Trường hợp bị lỗi
+                        return $defaultImage;
+                    }
+                    // Get Content-Type
+                    if (is_array($getContent) && isset($getContent['response_header']) && strpos('text', $getContent['response_header'])) {
+                        // Ảnh bị lỗi hoặc định dạng HTML
+                        return $defaultImage;
+                    }
+                    $image = $imagine->load($getContent);
                 }
                 $image->resize($size)->save($imageFile);
             }
@@ -155,6 +166,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      */
     public function cache($url = '', $format = 'png')
     {
+//        $image        = DataRepository::getData('config_image');
+//        $defaultImage = $image['default_image'];
         try {
             // Xác định extention của file ảnh
             $info          = new \SplFileInfo($url);

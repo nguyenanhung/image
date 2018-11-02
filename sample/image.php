@@ -16,7 +16,7 @@ $cache->setUrlPath('http://anhung.io/Packages/image/storage/tmp/');
 $cache->setDefaultImage();
 
 $thumbnail = $cache->thumbnail($url, 200, 300);
-$thumbnail2 = $cache->thumbnail('https://znews-photo.zadn.vn/w660/Uploaded/aohunax/2018_11_01/ttg_thumb.jpg', 200, 300);
+$thumbnail2 = $cache->thumbnail('http://sctv.tv247.vn/public/uploads/sctv/cdn8.net1491134259_1491139784.JPG', 200, 300);
 
 imgSrc($thumbnail);
 imgSrc($thumbnail2);
