@@ -14,6 +14,8 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 
+ini_set('display_errors', 0);
+
 /**
  * Class Utils
  *

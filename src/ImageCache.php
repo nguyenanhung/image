@@ -16,6 +16,8 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use nguyenanhung\MyImage\Repository\DataRepository;
 
+ini_set('display_errors', 0);
+
 /**
  * Class ImageCache
  *
@@ -134,21 +136,28 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 $imageFile = $this->tmpPath . $fileName;
                 $imageUrl  = $this->urlPath . $fileName;
                 if (!file_exists($imageFile)) {
+                    Utils::debug('Khong ton tai file: ' . $imageFile);
                     // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
                     // Xác định size ảnh
                     $size    = new Box($width, $height);
                     $imagine = new Imagine();
                     if (is_file($url)) {
+                        Utils::debug('URL is File');
                         $image = $imagine->open($url);
                         $image->resize($size)->save($imageFile);
                     } else {
+                        Utils::debug('URL is URL');
                         $getContent = Utils::getImageFromUrl($url);
+                        Utils::debug('Data Content: ' . json_encode($getContent));
                         if (isset($getContent['content'])) {
                             $image = $imagine->load($getContent['content']);
+                            Utils::debug('Load Content with CURL');
                         } else {
                             $image = $imagine->load($getContent);
+                            Utils::debug('Load Content with file_get_content');
                         }
-                        $image->resize($size)->save($imageFile);
+                        $result = $image->resize($size)->save($imageFile);
+                        Utils::debug('Ahihi: ' . json_encode($result));
                     }
                 }
                 $resultImage = trim($imageUrl);
