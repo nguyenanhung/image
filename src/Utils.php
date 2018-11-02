@@ -47,11 +47,6 @@ class Utils implements ProjectInterface
      */
     public static function getImageFromUrl($url = '')
     {
-        $header       = get_headers($url);
-        $content_type = $header["Content-Type"];
-        if (isset($content_type) && strpos('text', $content_type)) {
-            return NULL;
-        }
         try {
             $curl = new Curl();
             $curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
