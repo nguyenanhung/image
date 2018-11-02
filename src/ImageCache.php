@@ -119,40 +119,40 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
         Utils::debug('Width: ' . $width);
         Utils::debug('Height: ' . $height);
         Utils::debug('Format: ' . $format);
-        //try {
-        // Xác định extention của file ảnh
-        $info          = new \SplFileInfo($url);
-        $fileExtension = $info->getExtension();
-        $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-        Utils::debug('Output Format: ' . $outputFormat);
-        // Quy định tên file ảnh sẽ lưu
-        $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
-        $imageFile = $this->tmpPath . $fileName;
-        $imageUrl  = $this->urlPath . $fileName;
-        if (!file_exists($imageFile)) {
-            // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
-            // Xác định size ảnh
-            $size    = new Box($width, $height);
-            $imagine = new Imagine();
-            if (is_file($url)) {
-                $image = $imagine->open($url);
-                $image->resize($size)->save($imageFile);
-            } else {
-                $getContent = Utils::getImageFromUrl($url);
-                if (isset($getContent['content'])) {
-                    $image = $imagine->load($getContent['content']);
+        try {
+            // Xác định extention của file ảnh
+            $info          = new \SplFileInfo($url);
+            $fileExtension = $info->getExtension();
+            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+            Utils::debug('Output Format: ' . $outputFormat);
+            // Quy định tên file ảnh sẽ lưu
+            $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
+            $imageFile = $this->tmpPath . $fileName;
+            $imageUrl  = $this->urlPath . $fileName;
+            if (!file_exists($imageFile)) {
+                // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
+                // Xác định size ảnh
+                $size    = new Box($width, $height);
+                $imagine = new Imagine();
+                if (is_file($url)) {
+                    $image = $imagine->open($url);
+                    $image->resize($size)->save($imageFile);
                 } else {
-                    $image = $imagine->load($getContent);
+                    $getContent = Utils::getImageFromUrl($url);
+                    if (isset($getContent['content'])) {
+                        $image = $imagine->load($getContent['content']);
+                    } else {
+                        $image = $imagine->load($getContent);
+                    }
+                    $image->resize($size)->save($imageFile);
                 }
-                $image->resize($size)->save($imageFile);
             }
-        }
-        $resultImage = trim($imageUrl);
+            $resultImage = trim($imageUrl);
 
-        return $resultImage;
-//        }
-//        catch (\Exception $e) {
-//            return NULL;
-//        }
+            return $resultImage;
+        }
+        catch (\Exception $e) {
+            return NULL;
+        }
     }
 }
