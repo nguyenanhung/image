@@ -131,34 +131,23 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 if (is_file($url)) {
                     $image = $imagine->open($url);
                     $image->resize($size)->save($imageFile);
-                    $resultImage = trim($imageUrl);
                 } else {
                     $getContent = Utils::getImageFromUrl($url);
-                    if (is_array($getContent) && $getContent['status'] == 'error') {
-                        // Trường hợp bị lỗi
-                        $resultImage = $defaultImage;
-                    } // Get Content-Type
-                    elseif (is_array($getContent) && isset($getContent['response_header']) && strpos('text', $getContent['response_header'])) {
-                        // Ảnh bị lỗi hoặc định dạng HTML
-                        $resultImage = $defaultImage;
-                    } else {
+                    if (isset($getContent['content'])) {
                         $image = $imagine->load($getContent['content']);
-                        $image->resize($size)->save($imageFile);
-                        $resultImage = trim($imageUrl);
+                    } else {
+                        $image = $imagine->load($getContent);
                     }
+                    $image->resize($size)->save($imageFile);
                 }
-            } else {
-                $resultImage = trim($imageUrl);
             }
+            $resultImage = trim($imageUrl);
+
+            return $resultImage;
         }
         catch (\Exception $e) {
-            $resultImage = $this->defaultImage;
+            return NULL;
         }
-        if (empty($resultImage) && empty($this->defaultImage)) {
-            $resultImage = $defaultImage;
-        }
-
-        return $resultImage;
     }
 
     /**
