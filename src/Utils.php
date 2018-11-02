@@ -33,8 +33,8 @@ class Utils
         try {
             $curl = new Curl();
             $curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
-            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
-            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, TRUE);
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, 2);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, 2);
             $curl->setOpt(CURLOPT_ENCODING, "");
             $curl->setOpt(CURLOPT_MAXREDIRS, 10);
             $curl->setOpt(CURLOPT_TIMEOUT, 30);
