@@ -22,9 +22,9 @@
         "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "sybio/image-workshop": "^2.1",
         "imagine/imagine": "^1.1",
-        "curl/curl": "^1.9"
+        "curl/curl": "^1.9",
+        "monolog/monolog": "^1.23"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"
