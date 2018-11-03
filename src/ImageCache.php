@@ -114,7 +114,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @param string $format Format đầu ra
      *
      * @return string Đường dẫn link tới hình ảnh được tạo thumbnail
-     * @throws \Exception
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {

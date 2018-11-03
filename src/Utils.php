@@ -89,18 +89,21 @@ class Utils implements ProjectInterface
      * Function debug
      *
      * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 15:26
+     * @time  : 11/3/18 17:43
      *
      * @param string $msg
-     *
-     * @throws \Exception
      */
     public static function debug($msg = 'test')
     {
-        if (self::USE_DEBUG === TRUE) {
-            $logger = new Logger('imageCache');
-            $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
-            $logger->debug($msg);
+        try {
+            if (self::USE_DEBUG === TRUE) {
+                $logger = new Logger('imageCache');
+                $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
+                $logger->debug($msg);
+            }
+        }
+        catch (\Exception $e) {
+            return;
         }
     }
 }
