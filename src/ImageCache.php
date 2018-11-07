@@ -34,8 +34,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     /** @var string Cấu hình tới link ảnh mặc định, sẽ sử dụng trong trường hợp ảnh bị lỗi */
     protected $defaultImage;
 
-    protected $logger;
-
     /**
      * ImageCache constructor.
      */
