@@ -17,7 +17,7 @@ namespace nguyenanhung\MyImage\Interfaces;
  */
 interface ProjectInterface
 {
-    const VERSION                = '1.0.10';
+    const VERSION                = '1.0.11';
     const LAST_MODIFIED          = '2018-11-02';
     const AUTHOR_NAME            = 'Hung Nguyen';
     const AUTHOR_EMAIL           = 'dev@nguyenanhung.com';
@@ -35,7 +35,7 @@ interface ProjectInterface
     const EXIT_DATABASE          = 8; // database error
     const EXIT__AUTO_MIN         = 9; // lowest automatically-assigned error code
     const EXIT__AUTO_MAX         = 125; // highest automatically-assigned error code
-    const USE_BENCHMARK          = TRUE;
+    const USE_BENCHMARK          = FALSE;
     const USE_DEBUG              = FALSE;
 
     /**

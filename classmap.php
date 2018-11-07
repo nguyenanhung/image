@@ -20,7 +20,7 @@ spl_autoload_register(function ($className) {
     } elseif (strpos($fileName, 'nguyenanhung\MyImage\Repository') !== FALSE) {
         $fileName = str_replace('nguyenanhung\MyImage\Repository', 'src\Repository', $fileName);
     } else {
-        $fileName = str_replace('nguyenanhung\MyDatabase', 'src', $fileName);
+        $fileName = str_replace('nguyenanhung\MyImage', 'src', $fileName);
     }
 
     if (file_exists($fileName)) {
