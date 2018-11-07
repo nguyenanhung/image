@@ -156,7 +156,76 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                             Utils::debug('Load Content with file_get_content');
                         }
                         $result = $image->resize($size)->save($imageFile);
-                        Utils::debug('Ahihi: ' . json_encode($result));
+                        Utils::debug('Thumbnail Result: ' . json_encode($result));
+                    }
+                }
+                $resultImage = trim($imageUrl);
+
+                return $resultImage;
+            }
+            catch (RuntimeException $runtimeException) {
+                Utils::debug('RuntimeException: ' . $runtimeException->getMessage());
+
+                return NULL;
+            }
+        }
+        catch (\Exception $e) {
+            Utils::debug('Exception: ' . $e->getMessage());
+
+            return $defaultImage;
+        }
+    }
+
+    /**
+     * Hàm cache Image và save về server
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/7/18 09:10
+     *
+     * @param string $url    Đường dẫn hoặc URL hình ảnh
+     * @param string $format Format đầu ra
+     *
+     * @return null|string Đường dẫn link tới hình ảnh được cache
+     */
+    public function saveImage($url = '', $format = 'png')
+    {
+        $image        = DataRepository::getData('config_image');
+        $defaultImage = $image['default_image'];
+        try {
+            Utils::debug('URL: ' . $url);
+            Utils::debug('Format: ' . $format);
+            try {
+                // Xác định extention của file ảnh
+                $info          = new \SplFileInfo($url);
+                $fileExtension = $info->getExtension();
+                $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+                Utils::debug('Output Format: ' . $outputFormat);
+                // Quy định tên file ảnh sẽ lưu
+                $fileName  = md5($url) . '.' . $outputFormat;
+                $imageFile = $this->tmpPath . $fileName;
+                $imageUrl  = $this->urlPath . $fileName;
+                if (!file_exists($imageFile)) {
+                    Utils::debug('Khong ton tai file: ' . $imageFile);
+                    // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
+                    // Xác định size ảnh
+                    $imagine = new Imagine();
+                    if (is_file($url)) {
+                        Utils::debug('URL is File');
+                        $image = $imagine->open($url);
+                        $image->save($imageFile);
+                    } else {
+                        Utils::debug('URL is URL');
+                        $getContent = Utils::getImageFromUrl($url);
+                        Utils::debug('Data Content: ' . json_encode($getContent));
+                        if (isset($getContent['content'])) {
+                            $image = $imagine->load($getContent['content']);
+                            Utils::debug('Load Content with CURL');
+                        } else {
+                            $image = $imagine->load($getContent);
+                            Utils::debug('Load Content with file_get_content');
+                        }
+                        $result = $image->save($imageFile);
+                        Utils::debug('Save Image Result: ' . json_encode($result));
                     }
                 }
                 $resultImage = trim($imageUrl);

@@ -62,4 +62,17 @@ interface ImageCacheInterface
      * @return string Đường dẫn link tới hình ảnh được tạo thumbnail
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png');
+
+    /**
+     * Hàm cache Image và save về server
+     *
+     * @author: 713uk13m <dev@nguyenanhung.com>
+     * @time  : 11/7/18 09:10
+     *
+     * @param string $url    Đường dẫn hoặc URL hình ảnh
+     * @param string $format Format đầu ra
+     *
+     * @return null|string Đường dẫn link tới hình ảnh được cache
+     */
+    public function saveImage($url = '', $format = 'png');
 }
