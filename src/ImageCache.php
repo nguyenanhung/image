@@ -15,8 +15,6 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use nguyenanhung\MyImage\Repository\DataRepository;
 
-ini_set('display_errors', 0);
-
 /**
  * Class ImageCache
  *
