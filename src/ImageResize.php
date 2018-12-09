@@ -33,22 +33,27 @@ class ImageResize
      * @param int    $height Thiết lập thông số chiều cao
      * @param string $format Format đầu ra
      *
-     * @return \Imagine\Image\ImageInterface
+     * @return \Imagine\Image\ImageInterface|string
      */
     public static function process($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        $info          = new \SplFileInfo($url);
-        $fileExtension = $info->getExtension();
-        $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-        $imagine       = new Imagine();
-        if (is_file($url)) {
-            $image = $imagine->open($url);
-        } else {
-            $url   = Utils::getImageFromUrl($url);
-            $image = $imagine->load($url);
-        }
-        $image->resize(new Box($width, $height), ImageInterface::FILTER_UNDEFINED);
+        try {
+            $info          = new \SplFileInfo($url);
+            $fileExtension = $info->getExtension();
+            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+            $imagine       = new Imagine();
+            if (is_file($url)) {
+                $image = $imagine->open($url);
+            } else {
+                $url   = Utils::getImageFromUrl($url);
+                $image = $imagine->load($url);
+            }
+            $image->resize(new Box($width, $height), ImageInterface::FILTER_UNDEFINED);
 
-        return $image->show($outputFormat);
+            return $image->show($outputFormat);
+        }
+        catch (\Exception $e) {
+            return $url;
+        }
     }
 }

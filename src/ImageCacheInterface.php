@@ -7,12 +7,12 @@
  * Time: 14:46
  */
 
-namespace nguyenanhung\MyImage\Interfaces;
+namespace nguyenanhung\MyImage;
 
 /**
  * Interface ImageCacheInterface
  *
- * @package   nguyenanhung\MyImage\Interfaces
+ * @package   nguyenanhung\MyImage
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */

@@ -10,7 +10,6 @@
 namespace nguyenanhung\MyImage;
 
 use Imagine\Exception\RuntimeException;
-use nguyenanhung\MyImage\Interfaces\ImageCacheInterface;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
