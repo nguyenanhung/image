@@ -59,21 +59,21 @@ class Utils implements ProjectInterface
             $curl->setOpt(CURLOPT_FOLLOWLOCATION, TRUE);
             $curl->get($url);
             if ($curl->error === TRUE) {
-                self::debug('Error Exception: ' . $curl->http_status_code);
+                self::debug('Error Exception: ' . $curl->httpErrorMessage);
 
                 return [
                     'status'          => 'error',
-                    'code'            => $curl->http_status_code,
-                    'error'           => $curl->error_message,
-                    'response_header' => $curl->response_headers,
+                    'code'            => $curl->httpStatusCode,
+                    'error'           => $curl->errorMessage,
+                    'response_header' => $curl->responseHeaders,
                     'content'         => NULL
                 ];
             } else {
                 return [
                     'status'          => 'success',
-                    'code'            => $curl->http_status_code,
-                    'error'           => $curl->error_message,
-                    'response_header' => $curl->response_headers,
+                    'code'            => $curl->httpStatusCode,
+                    'error'           => $curl->errorMessage,
+                    'response_header' => $curl->responseHeaders,
                     'content'         => $curl->response
                 ];
             }
