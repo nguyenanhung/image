@@ -61,25 +61,28 @@ class Utils implements ProjectInterface
             if ($curl->error === TRUE) {
                 self::debug('Error Exception: ' . $curl->httpErrorMessage);
 
-                return [
+                return array(
                     'status'          => 'error',
                     'code'            => $curl->httpStatusCode,
                     'error'           => $curl->errorMessage,
                     'response_header' => $curl->responseHeaders,
                     'content'         => NULL
-                ];
+                );
             } else {
-                return [
+                return array(
                     'status'          => 'success',
                     'code'            => $curl->httpStatusCode,
                     'error'           => $curl->errorMessage,
                     'response_header' => $curl->responseHeaders,
                     'content'         => $curl->response
-                ];
+                );
             }
         }
         catch (\Exception $e) {
-            self::debug('Error Exception: ' . $e->getMessage());
+            if (function_exists('log_message')) {
+                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+                log_message('error', $message);
+            }
 
             return file_get_contents($url);
         }
@@ -96,13 +99,22 @@ class Utils implements ProjectInterface
     public static function debug($msg = 'test')
     {
         try {
-            if (self::USE_DEBUG === TRUE) {
-                $logger = new Logger('imageCache');
-                $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
-                $logger->debug($msg);
+            if (function_exists('log_message')) {
+                log_message('debug', $msg);
+            } else {
+                if (self::USE_DEBUG === TRUE) {
+                    $logger = new Logger('imageCache');
+                    $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
+                    $logger->debug($msg);
+                }
             }
         }
         catch (\Exception $e) {
+            if (function_exists('log_message')) {
+                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+                log_message('error', $message);
+            }
+
             return;
         }
     }
