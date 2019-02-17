@@ -25,6 +25,8 @@ interface ImageCacheInterface
      * @time  : 11/1/18 14:21
      *
      * @param string $tmpPath Thư mục cần lưu trữ
+     *
+     * @return  $this
      */
     public function setTmpPath($tmpPath = '');
 
@@ -35,6 +37,8 @@ interface ImageCacheInterface
      * @time  : 11/1/18 14:34
      *
      * @param string $urlPath
+     *
+     * @return  $this
      */
     public function setUrlPath($urlPath = '');
 
@@ -45,6 +49,8 @@ interface ImageCacheInterface
      * @time  : 11/1/18 15:40
      *
      * @param string $defaultImage Đường dẫn link ảnh mặc định
+     *
+     * @return  $this
      */
     public function setDefaultImage($defaultImage = '');
 

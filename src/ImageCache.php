@@ -58,6 +58,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @time  : 11/1/18 14:21
      *
      * @param string $tmpPath Thư mục cần lưu trữ
+     *
+     * @return  $this
      */
     public function setTmpPath($tmpPath = '')
     {
@@ -65,6 +67,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             $tmpPath = __DIR__ . '/../storage/tmp/';
         }
         $this->tmpPath = $tmpPath;
+
+        return $this;
     }
 
     /**
@@ -74,10 +78,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @time  : 11/1/18 14:34
      *
      * @param string $urlPath
+     *
+     * @return  $this
      */
     public function setUrlPath($urlPath = '')
     {
         $this->urlPath = $urlPath;
+
+        return $this;
     }
 
     /**
@@ -87,6 +95,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @time  : 11/1/18 15:40
      *
      * @param string $defaultImage Đường dẫn link ảnh mặc định
+     *
+     * @return  $this
      */
     public function setDefaultImage($defaultImage = '')
     {
@@ -95,6 +105,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             $defaultImage = $image['default_image'];
         }
         $this->defaultImage = $defaultImage;
+
+        return $this;
     }
 
     /**
@@ -136,11 +148,11 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                     $size    = new Box($width, $height);
                     $imagine = new Imagine();
                     if (is_file($url)) {
-                        Utils::debug('URL is File');
+                        Utils::debug('URL is File => ' . $url);
                         $image = $imagine->open($url);
                         $image->resize($size)->save($imageFile);
                     } else {
-                        Utils::debug('URL is URL');
+                        Utils::debug('URL is URL => ' . $url);
                         $getContent = Utils::getImageFromUrl($url);
                         Utils::debug('Data Content: ' . json_encode($getContent));
                         if (isset($getContent['content'])) {
@@ -159,13 +171,19 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return $resultImage;
             }
             catch (RuntimeException $runtimeException) {
-                Utils::debug('RuntimeException: ' . $runtimeException->getMessage());
+                if (function_exists('log_message')) {
+                    $message = 'Runtime Error Code: ' . $runtimeException->getCode() . ' - File: ' . $runtimeException->getFile() . ' - Line: ' . $runtimeException->getLine() . ' - Message: ' . $runtimeException->getMessage();
+                    log_message('error', $message);
+                }
 
                 return NULL;
             }
         }
         catch (\Exception $e) {
-            Utils::debug('Exception: ' . $e->getMessage());
+            if (function_exists('log_message')) {
+                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+                log_message('error', $message);
+            }
 
             return $defaultImage;
         }
@@ -205,11 +223,11 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                     // Xác định size ảnh
                     $imagine = new Imagine();
                     if (is_file($url)) {
-                        Utils::debug('URL is File');
+                        Utils::debug('URL is File => ' . $url);
                         $image = $imagine->open($url);
                         $image->save($imageFile);
                     } else {
-                        Utils::debug('URL is URL');
+                        Utils::debug('URL is URL => ' . $url);
                         $getContent = Utils::getImageFromUrl($url);
                         Utils::debug('Data Content: ' . json_encode($getContent));
                         if (isset($getContent['content'])) {
@@ -228,13 +246,19 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return $resultImage;
             }
             catch (RuntimeException $runtimeException) {
-                Utils::debug('RuntimeException: ' . $runtimeException->getMessage());
+                if (function_exists('log_message')) {
+                    $message = 'Runtime Error Code: ' . $runtimeException->getCode() . ' - File: ' . $runtimeException->getFile() . ' - Line: ' . $runtimeException->getLine() . ' - Message: ' . $runtimeException->getMessage();
+                    log_message('error', $message);
+                }
 
                 return NULL;
             }
         }
         catch (\Exception $e) {
-            Utils::debug('Exception: ' . $e->getMessage());
+            if (function_exists('log_message')) {
+                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+                log_message('error', $message);
+            }
 
             return $defaultImage;
         }
