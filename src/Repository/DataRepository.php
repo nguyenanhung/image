@@ -9,6 +9,7 @@
 namespace nguyenanhung\MyImage\Repository;
 
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
+use nguyenanhung\MyImage\Version;
 
 /**
  * Class DataRepository
@@ -19,21 +20,10 @@ use nguyenanhung\MyImage\Interfaces\ProjectInterface;
  */
 class DataRepository implements ProjectInterface
 {
+    use Version;
+
     const CONFIG_PATH = 'config';
     const CONFIG_EXT  = '.php';
-
-    /**
-     * Function getVersion
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 9/28/18 14:47
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return self::VERSION;
-    }
 
     /**
      * Hàm lấy nội dung config được quy định trong thư mục config
@@ -52,7 +42,7 @@ class DataRepository implements ProjectInterface
             return require $path;
         }
 
-        return [];
+        return array();
     }
 
     /**
@@ -71,6 +61,6 @@ class DataRepository implements ProjectInterface
             return require $filename;
         }
 
-        return [];
+        return array();
     }
 }

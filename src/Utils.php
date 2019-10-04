@@ -9,6 +9,7 @@
 
 namespace nguyenanhung\MyImage;
 
+use Exception;
 use Curl\Curl;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -23,29 +24,17 @@ ini_set('display_errors', 0);
  */
 class Utils implements ProjectInterface
 {
-    /**
-     * Function getVersion
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 15:26
-     *
-     * @return mixed|string
-     */
-    public function getVersion()
-    {
-        return self::VERSION;
-    }
+    use Version;
 
     /**
      * Function getImageFromUrl
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/2/18 16:48
-     *
      * @param string $url
      *
-     * @return array|bool|null|string
-     * @throws \Exception
+     * @return array|false|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/4/19 44:48
      */
     public static function getImageFromUrl($url = '')
     {
@@ -78,7 +67,7 @@ class Utils implements ProjectInterface
                 );
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             if (function_exists('log_message')) {
                 $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 log_message('error', $message);
@@ -91,10 +80,11 @@ class Utils implements ProjectInterface
     /**
      * Function debug
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/3/18 17:43
-     *
      * @param string $msg
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/4/19 44:37
      */
     public static function debug($msg = 'test')
     {
@@ -109,7 +99,7 @@ class Utils implements ProjectInterface
                 }
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             if (function_exists('log_message')) {
                 $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 log_message('error', $message);

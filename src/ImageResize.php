@@ -9,6 +9,8 @@
 
 namespace nguyenanhung\MyImage;
 
+use Exception;
+use SplFileInfo;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -38,7 +40,7 @@ class ImageResize
     public static function process($url = '', $width = 100, $height = 100, $format = 'png')
     {
         try {
-            $info          = new \SplFileInfo($url);
+            $info          = new SplFileInfo($url);
             $fileExtension = $info->getExtension();
             $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
             $imagine       = new Imagine();
@@ -52,7 +54,7 @@ class ImageResize
 
             return $image->show($outputFormat);
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             if (function_exists('log_message')) {
                 $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 log_message('error', $message);
