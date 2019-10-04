@@ -9,6 +9,8 @@
 
 namespace nguyenanhung\MyImage;
 
+use Exception;
+use SplFileInfo;
 use Imagine\Exception\RuntimeException;
 use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 use Imagine\Gd\Imagine;
@@ -24,6 +26,8 @@ use nguyenanhung\MyImage\Repository\DataRepository;
  */
 class ImageCache implements ProjectInterface, ImageCacheInterface
 {
+    use Version;
+
     /** @var string Đường dẫn thư mục lưu trữ hình ảnh */
     protected $tmpPath;
     /** @var string Đường dẫn hình ảnh trên server - tương đương với tmpPath */
@@ -33,22 +37,12 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
 
     /**
      * ImageCache constructor.
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
      */
     public function __construct()
     {
-    }
-
-    /**
-     * Function getVersion
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 14:16
-     *
-     * @return mixed|string
-     */
-    public function getVersion()
-    {
-        return self::VERSION;
     }
 
     /**
@@ -133,7 +127,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             Utils::debug('Format: ' . $format);
             try {
                 // Xác định extention của file ảnh
-                $info          = new \SplFileInfo($url);
+                $info          = new SplFileInfo($url);
                 $fileExtension = $info->getExtension();
                 $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
                 Utils::debug('Output Format: ' . $outputFormat);
@@ -179,7 +173,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return NULL;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             if (function_exists('log_message')) {
                 $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 log_message('error', $message);
@@ -209,7 +203,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             Utils::debug('Format: ' . $format);
             try {
                 // Xác định extention của file ảnh
-                $info          = new \SplFileInfo($url);
+                $info          = new SplFileInfo($url);
                 $fileExtension = $info->getExtension();
                 $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
                 Utils::debug('Output Format: ' . $outputFormat);
@@ -254,7 +248,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return NULL;
             }
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             if (function_exists('log_message')) {
                 $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 log_message('error', $message);
