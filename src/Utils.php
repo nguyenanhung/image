@@ -69,8 +69,8 @@ class Utils implements ProjectInterface
         }
         catch (Exception $e) {
             if (function_exists('log_message')) {
-                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
-                log_message('error', $message);
+                log_message('error', 'Error Message: ' . $e->getMessage());
+                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return file_get_contents($url);
@@ -101,8 +101,8 @@ class Utils implements ProjectInterface
         }
         catch (Exception $e) {
             if (function_exists('log_message')) {
-                $message = 'Error Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
-                log_message('error', $message);
+                log_message('error', 'Error Message: ' . $e->getMessage());
+                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return;
