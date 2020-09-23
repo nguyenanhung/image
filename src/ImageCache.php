@@ -167,7 +167,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             catch (RuntimeException $runtimeException) {
                 if (function_exists('log_message')) {
                     log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
-                    log_message('error', 'Runtime Error TraceAsString: ' . $runtimeException->getTraceAsString());
                 }
 
                 return NULL;
@@ -176,7 +175,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
         catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
-                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return $defaultImage;
@@ -242,7 +240,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
             catch (RuntimeException $runtimeException) {
                 if (function_exists('log_message')) {
                     log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
-                    log_message('error', 'Runtime Error TraceAsString: ' . $runtimeException->getTraceAsString());
                 }
 
                 return NULL;
@@ -251,7 +248,6 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
         catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
-                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return $defaultImage;
