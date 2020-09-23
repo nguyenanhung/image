@@ -57,7 +57,6 @@ class ImageResize
         catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
-                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return $url;

@@ -49,7 +49,6 @@ class Utils implements ProjectInterface
             $curl->get($url);
             if ($curl->error === TRUE) {
                 self::debug('Error Exception: ' . $curl->httpErrorMessage);
-
                 return array(
                     'status'          => 'error',
                     'code'            => $curl->httpStatusCode,
@@ -70,7 +69,6 @@ class Utils implements ProjectInterface
         catch (Exception $e) {
             if (function_exists('log_message')) {
                 log_message('error', 'Error Message: ' . $e->getMessage());
-                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
             }
 
             return file_get_contents($url);
