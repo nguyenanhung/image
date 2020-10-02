@@ -21,9 +21,9 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "imagine/imagine": "^1.1",
-        "php-curl-class/php-curl-class": "^8.3",
-        "monolog/monolog": "^1.23"
+        "imagine/imagine": "^1.2",
+        "php-curl-class/php-curl-class": "^8.8",
+        "monolog/monolog": "^2.0"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"
