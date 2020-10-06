@@ -24,7 +24,7 @@ use Imagine\Image\Box;
  */
 class ImageCache implements ProjectInterface, ImageCacheInterface
 {
-    use Version;
+    use Version, LoggerTrait;
 
     /** @var string Đường dẫn thư mục lưu trữ hình ảnh */
     protected $tmpPath;
@@ -32,6 +32,12 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     protected $urlPath;
     /** @var string Cấu hình tới link ảnh mặc định, sẽ sử dụng trong trường hợp ảnh bị lỗi */
     protected $defaultImage;
+    /** @var bool Logger Status: TRUE or FALSE */
+    protected $loggerStatus;
+    /** @var bool Logger Level */
+    protected $loggerLevel;
+    /** @var bool Logger Path */
+    protected $loggerPath;
 
     /**
      * ImageCache constructor.
