@@ -11,8 +11,8 @@ namespace nguyenanhung\MyImage;
 
 use Exception;
 use Curl\Curl;
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 ini_set('display_errors', 0);
 
@@ -86,7 +86,7 @@ class Utils implements ProjectInterface
     {
         try {
             if (function_exists('log_message')) {
-                log_message('debug', $msg);
+                // log_message('debug', $msg);
             } else {
                 if (self::USE_DEBUG === TRUE) {
                     $logger = new Logger('imageCache');
