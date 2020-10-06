@@ -16,8 +16,10 @@ namespace nguyenanhung\MyImage;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class GoogleGadgetsProxy
+class GoogleGadgetsProxy implements ProjectInterface
 {
+    use Version;
+
     /**
      * url: original image URL
      * container: must be "focus" (i dunno lol)

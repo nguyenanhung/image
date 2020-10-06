@@ -13,14 +13,15 @@ use Exception;
 use Curl\Curl;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 
 ini_set('display_errors', 0);
 
 /**
  * Class Utils
  *
- * @package nguyenanhung\MyImage
+ * @package   nguyenanhung\MyImage
+ * @author    713uk13m <dev@nguyenanhung.com>
+ * @copyright 713uk13m <dev@nguyenanhung.com>
  */
 class Utils implements ProjectInterface
 {
@@ -34,7 +35,7 @@ class Utils implements ProjectInterface
      * @return array|false|string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 10/4/19 44:48
+     * @time     : 10/06/2020 26:41
      */
     public static function getImageFromUrl($url = '')
     {
@@ -49,6 +50,7 @@ class Utils implements ProjectInterface
             $curl->get($url);
             if ($curl->error === TRUE) {
                 self::debug('Error Exception: ' . $curl->httpErrorMessage);
+
                 return array(
                     'status'          => 'error',
                     'code'            => $curl->httpStatusCode,
@@ -67,10 +69,6 @@ class Utils implements ProjectInterface
             }
         }
         catch (Exception $e) {
-            if (function_exists('log_message')) {
-                log_message('error', 'Error Message: ' . $e->getMessage());
-            }
-
             return file_get_contents($url);
         }
     }
@@ -82,7 +80,7 @@ class Utils implements ProjectInterface
      *
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 10/4/19 44:37
+     * @time     : 10/06/2020 26:49
      */
     public static function debug($msg = 'test')
     {
@@ -98,11 +96,6 @@ class Utils implements ProjectInterface
             }
         }
         catch (Exception $e) {
-            if (function_exists('log_message')) {
-                log_message('error', 'Error Message: ' . $e->getMessage());
-                log_message('error', 'Error TraceAsString: ' . $e->getTraceAsString());
-            }
-
             return;
         }
     }

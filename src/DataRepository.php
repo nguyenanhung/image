@@ -6,15 +6,12 @@
  * Time: 14:47
  */
 
-namespace nguyenanhung\MyImage\Repository;
-
-use nguyenanhung\MyImage\Interfaces\ProjectInterface;
-use nguyenanhung\MyImage\Version;
+namespace nguyenanhung\MyImage;
 
 /**
  * Class DataRepository
  *
- * @package   nguyenanhung\MyImage\Repository
+ * @package   nguyenanhung\MyImage
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
