@@ -22,8 +22,10 @@ use Imagine\Image\ImageInterface;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class ImageResize
+class ImageResize implements ProjectInterface
 {
+    use Version;
+
     /**
      * Function process
      *
@@ -55,10 +57,6 @@ class ImageResize
             return $image->show($outputFormat);
         }
         catch (Exception $e) {
-            if (function_exists('log_message')) {
-                log_message('error', 'Error Message: ' . $e->getMessage());
-            }
-
             return $url;
         }
     }

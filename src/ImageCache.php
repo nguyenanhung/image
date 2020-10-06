@@ -12,10 +12,8 @@ namespace nguyenanhung\MyImage;
 use Exception;
 use SplFileInfo;
 use Imagine\Exception\RuntimeException;
-use nguyenanhung\MyImage\Interfaces\ProjectInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use nguyenanhung\MyImage\Repository\DataRepository;
 
 /**
  * Class ImageCache
@@ -46,14 +44,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     }
 
     /**
-     * Cấu hình thư mục lưu trữ file Cache Image
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 14:21
+     * Function setTmpPath - Cấu hình thư mục lưu trữ file Cache Image
      *
      * @param string $tmpPath Thư mục cần lưu trữ
      *
-     * @return  $this
+     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2020 31:20
      */
     public function setTmpPath($tmpPath = '')
     {
@@ -66,14 +64,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     }
 
     /**
-     * Cấu hình đường dẫn link hình ảnh trên server
+     * Function setUrlPath - Cấu hình đường dẫn link hình ảnh trên server
      *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 14:34
+     * @param string $urlPath Đường dẫn link hình ảnh trên server
      *
-     * @param string $urlPath
-     *
-     * @return  $this
+     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2020 31:41
      */
     public function setUrlPath($urlPath = '')
     {
@@ -83,14 +81,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     }
 
     /**
-     * Cấu hình đường dẫn link ảnh mặc định
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 15:40
+     * Function setDefaultImage - Cấu hình đường dẫn link ảnh mặc định
      *
      * @param string $defaultImage Đường dẫn link ảnh mặc định
      *
-     * @return  $this
+     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2020 32:05
      */
     public function setDefaultImage($defaultImage = '')
     {
@@ -104,17 +102,17 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
     }
 
     /**
-     * Hàm hỗ trợ tạo thumbnail cho ảnh
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/1/18 14:44
+     * Function thumbnail - Hàm hỗ trợ tạo thumbnail cho ảnh
      *
      * @param string $url    Đường dẫn hoặc URL hình ảnh
      * @param int    $width  Thiết lập thông số chiều rộng
      * @param int    $height Thiết lập thông số chiều cao
      * @param string $format Format đầu ra
      *
-     * @return string Đường dẫn link tới hình ảnh được tạo thumbnail
+     * @return string|null Đường dẫn link tới hình ảnh được tạo thumbnail
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2020 32:28
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
@@ -165,32 +163,32 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return $resultImage;
             }
             catch (RuntimeException $runtimeException) {
-                if (function_exists('log_message')) {
-                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
-                }
+//                if (function_exists('log_message')) {
+//                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
+//                }
 
                 return NULL;
             }
         }
         catch (Exception $e) {
-            if (function_exists('log_message')) {
-                log_message('error', 'Error Message: ' . $e->getMessage());
-            }
+//            if (function_exists('log_message')) {
+//                log_message('error', 'Error Message: ' . $e->getMessage());
+//            }
 
             return $defaultImage;
         }
     }
 
     /**
-     * Hàm cache Image và save về server
-     *
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 11/7/18 09:10
+     * Function saveImage - Hàm cache Image và save về server
      *
      * @param string $url    Đường dẫn hoặc URL hình ảnh
      * @param string $format Format đầu ra
      *
-     * @return null|string Đường dẫn link tới hình ảnh được cache
+     * @return string|null Đường dẫn link tới hình ảnh được cache
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2020 32:52
      */
     public function saveImage($url = '', $format = 'png')
     {
@@ -238,17 +236,17 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 return $resultImage;
             }
             catch (RuntimeException $runtimeException) {
-                if (function_exists('log_message')) {
-                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
-                }
+//                if (function_exists('log_message')) {
+//                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
+//                }
 
                 return NULL;
             }
         }
         catch (Exception $e) {
-            if (function_exists('log_message')) {
-                log_message('error', 'Error Message: ' . $e->getMessage());
-            }
+//            if (function_exists('log_message')) {
+//                log_message('error', 'Error Message: ' . $e->getMessage());
+//            }
 
             return $defaultImage;
         }
