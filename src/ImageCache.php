@@ -164,9 +164,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                         Utils::debug('Thumbnail Result: ' . json_encode($result));
                     }
                 }
-                $resultImage = trim($imageUrl);
 
-                return $resultImage;
+                return trim($imageUrl);
             }
             catch (RuntimeException $runtimeException) {
 //                if (function_exists('log_message')) {
@@ -237,9 +236,8 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                         Utils::debug('Save Image Result: ' . json_encode($result));
                     }
                 }
-                $resultImage = trim($imageUrl);
 
-                return $resultImage;
+                return trim($imageUrl);
             }
             catch (RuntimeException $runtimeException) {
 //                if (function_exists('log_message')) {

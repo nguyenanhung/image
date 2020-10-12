@@ -8,15 +8,15 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../functions.php';
-$url = 'http://sctv.tv247.vn/public/uploads/sctv/logo_nen5_18_1535073239s.png';
+$url = 'https://znews-photo.zadn.vn/w960/Uploaded/jugtzb/2020_10_12/DJI_0254.jpg';
 
-$cache = new \nguyenanhung\MyImage\ImageCache();
+$cache = new nguyenanhung\MyImage\ImageCache();
 $cache->setTmpPath(__DIR__ . '/../storage/tmp/');
 $cache->setUrlPath('http://anhung.io/Packages/image/storage/tmp/');
 $cache->setDefaultImage();
 
 $thumbnail  = $cache->thumbnail($url, 200, 300);
-$thumbnail2 = $cache->thumbnail('http://sctv.tv247.vn/public/uploads/sctv/cdn8.net1491134259_1491139784.JPG', 200, 300);
+$thumbnail2 = $cache->thumbnail('https://znews-photo.zadn.vn/w960/Uploaded/jugtzb/2020_10_12/DJI_0254.jpg', 200, 300);
 $saveImage  = $cache->saveImage($url);
 
 imgSrc($thumbnail);
