@@ -85,14 +85,10 @@ class Utils implements ProjectInterface
     public static function debug($msg = 'test')
     {
         try {
-            if (function_exists('log_message')) {
-                // log_message('debug', $msg);
-            } else {
-                if (self::USE_DEBUG === TRUE) {
-                    $logger = new Logger('imageCache');
-                    $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
-                    $logger->debug($msg);
-                }
+            if (self::USE_DEBUG === TRUE) {
+                $logger = new Logger('imageCache');
+                $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
+                $logger->debug($msg);
             }
         }
         catch (Exception $e) {

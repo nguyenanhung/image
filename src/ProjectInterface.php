@@ -17,12 +17,13 @@ namespace nguyenanhung\MyImage;
  */
 interface ProjectInterface
 {
-    const VERSION       = '2.0.0.1';
-    const LAST_MODIFIED = '2020-10-06';
-    const AUTHOR_NAME   = 'Hung Nguyen';
-    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
-    const PROJECT_NAME  = 'My Image';
-    const USE_DEBUG     = FALSE;
+    const VERSION        = '2.0.0.2';
+    const LAST_MODIFIED  = '2020-10-12';
+    const PROJECT_NAME   = 'My Image';
+    const AUTHOR_NAME    = 'Hung Nguyen';
+    const AUTHOR_EMAIL   = 'dev@nguyenanhung.com';
+    const AUTHOR_WEBSITE = 'https://nguyenanhung.com/';
+    const USE_DEBUG      = FALSE;
 
     /**
      * Function getVersion
