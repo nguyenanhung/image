@@ -10,7 +10,6 @@
 namespace nguyenanhung\MyImage;
 
 use Exception;
-use Curl\Curl;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -40,32 +39,33 @@ class Utils implements ProjectInterface
     public static function getImageFromUrl($url = '')
     {
         try {
-            $curl = new Curl();
-            $curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
-            $curl->setOpt(CURLOPT_ENCODING, "");
-            $curl->setOpt(CURLOPT_MAXREDIRS, 10);
-            $curl->setOpt(CURLOPT_TIMEOUT, 30);
-            $curl->setOpt(CURLOPT_CONNECTTIMEOUT, 30);
-            $curl->setOpt(CURLOPT_FOLLOWLOCATION, TRUE);
-            $curl->get($url);
-            if ($curl->error === TRUE) {
-                self::debug('Error Exception: ' . $curl->httpErrorMessage);
-
-                return array(
-                    'status'          => 'error',
-                    'code'            => $curl->httpStatusCode,
-                    'error'           => $curl->errorMessage,
-                    'response_header' => $curl->responseHeaders,
-                    'content'         => NULL
-                );
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL            => trim($url),
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 0,
+                CURLOPT_FOLLOWLOCATION => TRUE,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => "GET",
+            ]);
+            $error        = curl_errno($curl);
+            $errorMessage = curl_error($curl);
+            $response     = curl_exec($curl);
+            curl_close($curl);
+            if ($error > 0) {
+                return [
+                    'status'  => 'error',
+                    'error'   => $errorMessage,
+                    'content' => NULL
+                ];
             } else {
-                return array(
-                    'status'          => 'success',
-                    'code'            => $curl->httpStatusCode,
-                    'error'           => $curl->errorMessage,
-                    'response_header' => $curl->responseHeaders,
-                    'content'         => $curl->response
-                );
+                return [
+                    'status'  => 'success',
+                    'error'   => $errorMessage,
+                    'content' => $response
+                ];
             }
         }
         catch (Exception $e) {

@@ -9,7 +9,7 @@
         "photo"
     ],
     "homepage": "https://github.com/nguyenanhung/image",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Nguyen An Hung",
@@ -22,7 +22,6 @@
         "ext-curl": "*",
         "ext-json": "*",
         "imagine/imagine": "^1.2",
-        "php-curl-class/php-curl-class": "^8.8",
         "monolog/monolog": "^2.0"
     },
     "require-dev": {
