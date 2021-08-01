@@ -22,7 +22,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "imagine/imagine": "^1.2",
-        "monolog/monolog": "^2.2"
+        "monolog/monolog": "^2.3"
     },
     "require-dev": {
         "kint-php/kint": "^3.0"
