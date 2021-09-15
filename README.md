@@ -1,8 +1,5 @@
-[![Latest Stable Version](https://poser.pugx.org/nguyenanhung/image/v/stable)](https://packagist.org/packages/nguyenanhung/image)
-[![Total Downloads](https://poser.pugx.org/nguyenanhung/image/downloads)](https://packagist.org/packages/nguyenanhung/image)
-[![Latest Unstable Version](https://poser.pugx.org/nguyenanhung/image/v/unstable)](https://packagist.org/packages/nguyenanhung/image)
-[![composer.lock](https://poser.pugx.org/nguyenanhung/image/composerlock)](https://packagist.org/packages/nguyenanhung/image)
-[![License](https://poser.pugx.org/nguyenanhung/image/license)](https://packagist.org/packages/nguyenanhung/image)
+[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/image/v)](https://packagist.org/packages/nguyenanhung/image) [![Total Downloads](http://poser.pugx.org/nguyenanhung/image/downloads)](https://packagist.org/packages/nguyenanhung/image) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/image/v/unstable)](https://packagist.org/packages/nguyenanhung/image) [![License](http://poser.pugx.org/nguyenanhung/image/license)](https://packagist.org/packages/nguyenanhung/image) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/image/require/php)](https://packagist.org/packages/nguyenanhung/image)
+
 # Image Processing
 
 1 vài hàm, thư viện dùng xử lý ảnh, cache anh và resize ảnh

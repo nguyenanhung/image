@@ -19,6 +19,7 @@
         }
     ],
     "require": {
+        "php": "^7.0 || ^8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "imagine/imagine": "^1.2",
