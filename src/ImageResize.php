@@ -39,7 +39,7 @@ class ImageResize implements ProjectInterface
      *
      * @return \Imagine\Image\ImageInterface|string
      */
-    public static function process($url = '', $width = 100, $height = 100, $format = 'png')
+    public static function process(string $url = '', int $width = 100, int $height = 100, string $format = 'png')
     {
         try {
             $info          = new SplFileInfo($url);
@@ -55,8 +55,7 @@ class ImageResize implements ProjectInterface
             $image->resize(new Box($width, $height), ImageInterface::FILTER_UNDEFINED);
 
             return $image->show($outputFormat);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $url;
         }
     }

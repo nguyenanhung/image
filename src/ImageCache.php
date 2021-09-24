@@ -22,7 +22,7 @@ use Imagine\Image\Box;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class ImageCache implements ProjectInterface, ImageCacheInterface
+class ImageCache implements ProjectInterface
 {
     use Version, LoggerTrait;
 
@@ -54,12 +54,12 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      *
      * @param string $tmpPath Thư mục cần lưu trữ
      *
-     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 31:20
      */
-    public function setTmpPath($tmpPath = '')
+    public function setTmpPath(string $tmpPath = ''): ImageCache
     {
         if (empty($tmpPath)) {
             $tmpPath = __DIR__ . '/../storage/tmp/';
@@ -74,12 +74,12 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      *
      * @param string $urlPath Đường dẫn link hình ảnh trên server
      *
-     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 31:41
      */
-    public function setUrlPath($urlPath = '')
+    public function setUrlPath(string $urlPath = ''): ImageCache
     {
         $this->urlPath = $urlPath;
 
@@ -91,12 +91,12 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      *
      * @param string $defaultImage Đường dẫn link ảnh mặc định
      *
-     * @return $this|\nguyenanhung\MyImage\ImageCacheInterface
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:05
      */
-    public function setDefaultImage($defaultImage = '')
+    public function setDefaultImage(string $defaultImage = ''): ImageCache
     {
         if (empty($defaultImage)) {
             $image        = DataRepository::getData('config_image');
@@ -120,7 +120,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:28
      */
-    public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
+    public function thumbnail(string $url = '', int $width = 100, int $height = 100, string $format = 'png')
     {
         $image        = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];
@@ -166,16 +166,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 }
 
                 return trim($imageUrl);
-            }
-            catch (RuntimeException $runtimeException) {
+            } catch (RuntimeException $runtimeException) {
 //                if (function_exists('log_message')) {
 //                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
 //                }
 
-                return NULL;
+                return null;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
 //            if (function_exists('log_message')) {
 //                log_message('error', 'Error Message: ' . $e->getMessage());
 //            }
@@ -195,7 +193,7 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:52
      */
-    public function saveImage($url = '', $format = 'png')
+    public function saveImage(string $url = '', string $format = 'png')
     {
         $image        = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];
@@ -238,16 +236,14 @@ class ImageCache implements ProjectInterface, ImageCacheInterface
                 }
 
                 return trim($imageUrl);
-            }
-            catch (RuntimeException $runtimeException) {
+            } catch (RuntimeException $runtimeException) {
 //                if (function_exists('log_message')) {
 //                    log_message('error', 'Runtime Error Message: ' . $runtimeException->getMessage());
 //                }
 
-                return NULL;
+                return null;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
 //            if (function_exists('log_message')) {
 //                log_message('error', 'Error Message: ' . $e->getMessage());
 //            }

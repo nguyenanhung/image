@@ -36,7 +36,7 @@ class Utils implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 26:41
      */
-    public static function getImageFromUrl($url = '')
+    public static function getImageFromUrl(string $url = '')
     {
         try {
             $curl = curl_init();
@@ -60,13 +60,13 @@ class Utils implements ProjectInterface
                     'error'   => $errorMessage,
                     'content' => NULL
                 ];
-            } else {
-                return [
-                    'status'  => 'success',
-                    'error'   => $errorMessage,
-                    'content' => $response
-                ];
             }
+
+            return [
+                'status'  => 'success',
+                'error'   => $errorMessage,
+                'content' => $response
+            ];
         }
         catch (Exception $e) {
             return file_get_contents($url);
@@ -82,7 +82,7 @@ class Utils implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 26:49
      */
-    public static function debug($msg = 'test')
+    public static function debug(string $msg = 'test')
     {
         try {
             if (self::USE_DEBUG === TRUE) {

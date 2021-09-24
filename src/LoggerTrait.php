@@ -29,7 +29,7 @@ trait LoggerTrait
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 45:23
      */
-    public function setLoggerStatus($loggerStatus = FALSE)
+    public function setLoggerStatus(bool $loggerStatus = false)
     {
         $this->loggerStatus = $loggerStatus;
 
@@ -46,7 +46,7 @@ trait LoggerTrait
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 45:50
      */
-    public function setLoggerLevel($loggerLevel = NULL)
+    public function setLoggerLevel($loggerLevel = null)
     {
         $this->loggerLevel = $loggerLevel;
 
