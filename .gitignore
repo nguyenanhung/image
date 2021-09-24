@@ -131,3 +131,6 @@ storage/cache/*
 !storage/logs/index.html
 !storage/cache/.htaccess
 !storage/cache/index.html
+
+tmp/*
+!tmp/.gitkeep
