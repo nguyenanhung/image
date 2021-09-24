@@ -29,7 +29,7 @@ trait LoggerTrait
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 45:23
      */
-    public function setLoggerStatus(bool $loggerStatus = false)
+    public function setLoggerStatus($loggerStatus = false)
     {
         $this->loggerStatus = $loggerStatus;
 

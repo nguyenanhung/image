@@ -32,7 +32,7 @@ class WpProxy implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 02/10/2021 06:14
      */
-    public function generate(string $imageUrl = '', string $server = 'i3'): string
+    public function generate($imageUrl = '', $server = 'i3')
     {
         $imageUrl = str_replace(array('https://', 'http://'), '', $imageUrl);
         $url      = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
@@ -51,7 +51,7 @@ class WpProxy implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/24/2021 54:12
      */
-    public static function cache(string $imageUrl = '', string $server = 'i3'): string
+    public static function cache($imageUrl = '', $server = 'i3')
     {
         return (new self)->generate($imageUrl, $server);
     }

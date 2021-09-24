@@ -59,7 +59,7 @@ class ImageCache implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 31:20
      */
-    public function setTmpPath(string $tmpPath = ''): ImageCache
+    public function setTmpPath($tmpPath = '')
     {
         if (empty($tmpPath)) {
             $tmpPath = __DIR__ . '/../storage/tmp/';
@@ -79,7 +79,7 @@ class ImageCache implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 31:41
      */
-    public function setUrlPath(string $urlPath = ''): ImageCache
+    public function setUrlPath($urlPath = '')
     {
         $this->urlPath = $urlPath;
 
@@ -96,7 +96,7 @@ class ImageCache implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:05
      */
-    public function setDefaultImage(string $defaultImage = ''): ImageCache
+    public function setDefaultImage($defaultImage = '')
     {
         if (empty($defaultImage)) {
             $image        = DataRepository::getData('config_image');
@@ -120,7 +120,7 @@ class ImageCache implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:28
      */
-    public function thumbnail(string $url = '', int $width = 100, int $height = 100, string $format = 'png')
+    public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
         $image        = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];
@@ -193,7 +193,7 @@ class ImageCache implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 32:52
      */
-    public function saveImage(string $url = '', string $format = 'png')
+    public function saveImage($url = '', $format = 'png')
     {
         $image        = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];

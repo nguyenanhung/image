@@ -27,7 +27,7 @@ trait Version
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/4/19 44:57
      */
-    public function getVersion(): string
+    public function getVersion()
     {
         return self::VERSION;
     }

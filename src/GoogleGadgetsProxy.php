@@ -43,7 +43,7 @@ class GoogleGadgetsProxy implements ProjectInterface
      *
      * @return string Đường dẫn ảnh sau khi đã resize
      */
-    public static function resize(string $url = '', int $width = 100, int $height = NULL): string
+    public static function resize($url = '', $width = 100, $height = null)
     {
         $params             = array();
         $params['url']      = $url; // original image URL

@@ -36,17 +36,17 @@ class Utils implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 26:41
      */
-    public static function getImageFromUrl(string $url = '')
+    public static function getImageFromUrl($url = '')
     {
         try {
             $curl = curl_init();
             curl_setopt_array($curl, [
                 CURLOPT_URL            => trim($url),
-                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => "",
                 CURLOPT_MAXREDIRS      => 10,
                 CURLOPT_TIMEOUT        => 5,
-                CURLOPT_FOLLOWLOCATION => TRUE,
+                CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => "GET",
             ]);
@@ -58,7 +58,7 @@ class Utils implements ProjectInterface
                 return [
                     'status'  => 'error',
                     'error'   => $errorMessage,
-                    'content' => NULL
+                    'content' => null
                 ];
             }
 
@@ -67,8 +67,7 @@ class Utils implements ProjectInterface
                 'error'   => $errorMessage,
                 'content' => $response
             ];
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return file_get_contents($url);
         }
     }
@@ -82,16 +81,15 @@ class Utils implements ProjectInterface
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 10/06/2020 26:49
      */
-    public static function debug(string $msg = 'test')
+    public static function debug($msg = 'test')
     {
         try {
-            if (self::USE_DEBUG === TRUE) {
+            if (self::USE_DEBUG === true) {
                 $logger = new Logger('imageCache');
                 $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
                 $logger->debug($msg);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return;
         }
     }
