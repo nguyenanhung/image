@@ -16,10 +16,8 @@ namespace nguyenanhung\MyImage;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class GoogleGadgetsProxy implements ProjectInterface
+class GoogleGadgetsProxy extends BaseImage
 {
-    use Version;
-
     /**
      * url: original image URL
      * container: must be "focus" (i dunno lol)
@@ -27,9 +25,9 @@ class GoogleGadgetsProxy implements ProjectInterface
      * resize_w: width in pixels
      * resize_h: height in pixels
      */
-    const PROXY_URL       = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
+    const PROXY_URL = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy';
     const PROXY_CONTAINER = 'focus';
-    const PROXY_REFRESH   = 2592000;
+    const PROXY_REFRESH = 2592000;
 
     /**
      * Hàm resize ảnh sử dụng Google Gadgets Proxy
@@ -45,14 +43,14 @@ class GoogleGadgetsProxy implements ProjectInterface
      */
     public static function resize($url = '', $width = 100, $height = null)
     {
-        $params             = array();
-        $params['url']      = $url; // original image URL
+        $params = array();
+        $params['url'] = $url; // original image URL
         $params['resize_w'] = $width; //  width in pixels
         if ($height !== null) {
             $params['resize_h'] = $height; // height in pixels
         }
         $params['container'] = self::PROXY_CONTAINER; // must be "focus" (i dunno lol)
-        $params['refresh']   = self::PROXY_REFRESH; // time (in seconds) to cache it on G's servers
+        $params['refresh'] = self::PROXY_REFRESH; // time (in seconds) to cache it on G's servers
         // Result URL
         $url = self::PROXY_URL . '?' . urldecode(http_build_query($params));
 

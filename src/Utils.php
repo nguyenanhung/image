@@ -22,10 +22,8 @@ ini_set('display_errors', 0);
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class Utils implements ProjectInterface
+class Utils extends BaseImage
 {
-    use Version;
-
     /**
      * Function getImageFromUrl
      *
@@ -40,7 +38,7 @@ class Utils implements ProjectInterface
     {
         try {
             $curl = curl_init();
-            curl_setopt_array($curl, [
+            curl_setopt_array($curl, array(
                 CURLOPT_URL            => trim($url),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => "",
@@ -49,24 +47,23 @@ class Utils implements ProjectInterface
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => "GET",
-            ]);
-            $error        = curl_errno($curl);
+            ));
+            $error = curl_errno($curl);
             $errorMessage = curl_error($curl);
-            $response     = curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
             if ($error > 0) {
-                return [
+                return array(
                     'status'  => 'error',
                     'error'   => $errorMessage,
                     'content' => null
-                ];
+                );
             }
-
-            return [
+            return array(
                 'status'  => 'success',
                 'error'   => $errorMessage,
                 'content' => $response
-            ];
+            );
         } catch (Exception $e) {
             return file_get_contents($url);
         }

@@ -22,22 +22,14 @@ use Imagine\Image\Box;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class ImageCache implements ProjectInterface
+class ImageCache extends BaseImage
 {
-    use Version, LoggerTrait;
-
     /** @var string Đường dẫn thư mục lưu trữ hình ảnh */
     protected $tmpPath;
     /** @var string Đường dẫn hình ảnh trên server - tương đương với tmpPath */
     protected $urlPath;
     /** @var string Cấu hình tới link ảnh mặc định, sẽ sử dụng trong trường hợp ảnh bị lỗi */
     protected $defaultImage;
-    /** @var bool Logger Status: TRUE or FALSE */
-    protected $loggerStatus;
-    /** @var bool Logger Level */
-    protected $loggerLevel;
-    /** @var bool Logger Path */
-    protected $loggerPath;
 
     /**
      * ImageCache constructor.
@@ -99,7 +91,7 @@ class ImageCache implements ProjectInterface
     public function setDefaultImage($defaultImage = '')
     {
         if (empty($defaultImage)) {
-            $image        = DataRepository::getData('config_image');
+            $image = DataRepository::getData('config_image');
             $defaultImage = $image['default_image'];
         }
         $this->defaultImage = $defaultImage;
@@ -122,7 +114,7 @@ class ImageCache implements ProjectInterface
      */
     public function thumbnail($url = '', $width = 100, $height = 100, $format = 'png')
     {
-        $image        = DataRepository::getData('config_image');
+        $image = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];
         try {
             Utils::debug('URL: ' . $url);
@@ -131,19 +123,19 @@ class ImageCache implements ProjectInterface
             Utils::debug('Format: ' . $format);
             try {
                 // Xác định extention của file ảnh
-                $info          = new SplFileInfo($url);
+                $info = new SplFileInfo($url);
                 $fileExtension = $info->getExtension();
-                $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+                $outputFormat = !empty($fileExtension) ? $fileExtension : $format;
                 Utils::debug('Output Format: ' . $outputFormat);
                 // Quy định tên file ảnh sẽ lưu
-                $fileName  = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
+                $fileName = md5($url . $width . $height) . '-' . $width . 'x' . $height . '.' . $outputFormat;
                 $imageFile = $this->tmpPath . $fileName;
-                $imageUrl  = $this->urlPath . $fileName;
+                $imageUrl = $this->urlPath . $fileName;
                 if (!file_exists($imageFile)) {
                     Utils::debug('Khong ton tai file: ' . $imageFile);
                     // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
                     // Xác định size ảnh
-                    $size    = new Box($width, $height);
+                    $size = new Box($width, $height);
                     $imagine = new Imagine();
                     if (is_file($url)) {
                         Utils::debug('URL is File => ' . $url);
@@ -195,21 +187,21 @@ class ImageCache implements ProjectInterface
      */
     public function saveImage($url = '', $format = 'png')
     {
-        $image        = DataRepository::getData('config_image');
+        $image = DataRepository::getData('config_image');
         $defaultImage = $image['default_image'];
         try {
             Utils::debug('URL: ' . $url);
             Utils::debug('Format: ' . $format);
             try {
                 // Xác định extention của file ảnh
-                $info          = new SplFileInfo($url);
+                $info = new SplFileInfo($url);
                 $fileExtension = $info->getExtension();
-                $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
+                $outputFormat = !empty($fileExtension) ? $fileExtension : $format;
                 Utils::debug('Output Format: ' . $outputFormat);
                 // Quy định tên file ảnh sẽ lưu
-                $fileName  = md5($url) . '.' . $outputFormat;
+                $fileName = md5($url) . '.' . $outputFormat;
                 $imageFile = $this->tmpPath . $fileName;
-                $imageUrl  = $this->urlPath . $fileName;
+                $imageUrl = $this->urlPath . $fileName;
                 if (!file_exists($imageFile)) {
                     Utils::debug('Khong ton tai file: ' . $imageFile);
                     // Nếu như không tồn tại file ảnh -> sẽ tiến hành phân tích và cache file
