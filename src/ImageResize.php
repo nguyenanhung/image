@@ -22,10 +22,8 @@ use Imagine\Image\ImageInterface;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class ImageResize implements ProjectInterface
+class ImageResize extends BaseImage
 {
-    use Version;
-
     /**
      * Function process
      *
@@ -42,14 +40,14 @@ class ImageResize implements ProjectInterface
     public static function process(string $url = '', int $width = 100, int $height = 100, string $format = 'png')
     {
         try {
-            $info          = new SplFileInfo($url);
+            $info = new SplFileInfo($url);
             $fileExtension = $info->getExtension();
-            $outputFormat  = !empty($fileExtension) ? $fileExtension : $format;
-            $imagine       = new Imagine();
+            $outputFormat = !empty($fileExtension) ? $fileExtension : $format;
+            $imagine = new Imagine();
             if (is_file($url)) {
                 $image = $imagine->open($url);
             } else {
-                $url   = Utils::getImageFromUrl($url);
+                $url = Utils::getImageFromUrl($url);
                 $image = $imagine->load($url);
             }
             $image->resize(new Box($width, $height), ImageInterface::FILTER_UNDEFINED);

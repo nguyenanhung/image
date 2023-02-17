@@ -22,10 +22,8 @@ ini_set('display_errors', 0);
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class Utils implements ProjectInterface
+class Utils extends BaseImage
 {
-    use Version;
-
     /**
      * Function getImageFromUrl
      *
@@ -42,23 +40,23 @@ class Utils implements ProjectInterface
             $curl = curl_init();
             curl_setopt_array($curl, [
                 CURLOPT_URL            => trim($url),
-                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => "",
                 CURLOPT_MAXREDIRS      => 10,
                 CURLOPT_TIMEOUT        => 5,
-                CURLOPT_FOLLOWLOCATION => TRUE,
+                CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => "GET",
             ]);
-            $error        = curl_errno($curl);
+            $error = curl_errno($curl);
             $errorMessage = curl_error($curl);
-            $response     = curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
             if ($error > 0) {
                 return [
                     'status'  => 'error',
                     'error'   => $errorMessage,
-                    'content' => NULL
+                    'content' => null
                 ];
             }
 
@@ -67,8 +65,7 @@ class Utils implements ProjectInterface
                 'error'   => $errorMessage,
                 'content' => $response
             ];
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return file_get_contents($url);
         }
     }
@@ -85,13 +82,12 @@ class Utils implements ProjectInterface
     public static function debug(string $msg = 'test')
     {
         try {
-            if (self::USE_DEBUG === TRUE) {
+            if (self::USE_DEBUG === true) {
                 $logger = new Logger('imageCache');
                 $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
                 $logger->debug($msg);
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return;
         }
     }
