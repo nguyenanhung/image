@@ -17,7 +17,7 @@ namespace nguyenanhung\MyImage;
  */
 interface ProjectInterface
 {
-    const VERSION = '2.1.1';
+    const VERSION = '2.1.2';
     const LAST_MODIFIED = '2023-02-17';
     const PROJECT_NAME = 'My Image Processing';
     const AUTHOR_NAME = 'Hung Nguyen';

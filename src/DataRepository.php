@@ -15,10 +15,8 @@ namespace nguyenanhung\MyImage;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class DataRepository implements ProjectInterface
+class DataRepository extends BaseImage
 {
-    use Version;
-
     const CONFIG_PATH = 'config';
     const CONFIG_EXT = '.php';
 
