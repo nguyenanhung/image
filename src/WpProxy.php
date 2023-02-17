@@ -17,10 +17,8 @@ namespace nguyenanhung\MyImage;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class WpProxy implements ProjectInterface
+class WpProxy extends BaseImage
 {
-    use Version;
-
     /**
      * Function generate
      *
@@ -35,7 +33,7 @@ class WpProxy implements ProjectInterface
     public function generate(string $imageUrl = '', string $server = 'i3'): string
     {
         $imageUrl = str_replace(array('https://', 'http://'), '', $imageUrl);
-        $url      = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
+        $url = 'https://' . trim($server) . '.wp.com/' . $imageUrl;
 
         return trim($url);
     }
