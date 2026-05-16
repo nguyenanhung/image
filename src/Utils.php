@@ -39,29 +39,31 @@ class Utils extends BaseImage
         try {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL            => trim($url),
+                CURLOPT_URL => trim($url),
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING       => "",
-                CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_TIMEOUT        => 5,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 5,
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST  => "GET",
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
             ));
             $error = curl_errno($curl);
             $errorMessage = curl_error($curl);
             $response = curl_exec($curl);
-            curl_close($curl);
+            if (PHP_VERSION_ID < 80000) {
+                curl_close($curl);
+            }
             if ($error > 0) {
                 return array(
-                    'status'  => 'error',
-                    'error'   => $errorMessage,
+                    'status' => 'error',
+                    'error' => $errorMessage,
                     'content' => null
                 );
             }
             return array(
-                'status'  => 'success',
-                'error'   => $errorMessage,
+                'status' => 'success',
+                'error' => $errorMessage,
                 'content' => $response
             );
         } catch (Exception $e) {
@@ -83,7 +85,9 @@ class Utils extends BaseImage
         try {
             if (self::USE_DEBUG === true) {
                 $logger = new Logger('imageCache');
-                $logger->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG));
+                $logger->pushHandler(
+                    new StreamHandler(__DIR__ . '/../storage/logs/Log-' . date('Y-m-d') . '.log', Logger::DEBUG)
+                );
                 $logger->debug($msg);
             }
         } catch (Exception $e) {
